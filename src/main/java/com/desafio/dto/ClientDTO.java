@@ -6,19 +6,35 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.br.CPF;
+
 import com.desafio.entities.Client;
 
 public class ClientDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Long id;
+	@Size(min = 2, max = 20, message = "Nome deve conter entre 2 e 20 caracteres.")
 	private String name;
+	@CPF
 	private String cpf;
+	@Positive(message = "O valor deve ser positivo.")
 	private Double income;
+	@PastOrPresent(message = "A data não pode ser futura.")
 	private Instant birthDate;
+	@Positive(message = "O valor deve ser positivo.")
 	private Integer children;
 	
+	@Size(min = 2, max = 20, message = "Nome deve conter entre 2 e 20 caracteres.")
+	@NotBlank(message = "Campo login requerido.")
 	private String login;
+	@Size(min = 5, max = 20, message = "Password deve conter entre 5 e 20 caracteres.")
+	@NotBlank(message = "Campo password requerido.")
 	private String password;
 	
 	private Set<RoleDTO> roles = new HashSet<>();

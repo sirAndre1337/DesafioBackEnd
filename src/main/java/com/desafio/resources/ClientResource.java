@@ -2,6 +2,8 @@ package com.desafio.resources;
 
 import java.net.URI;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -46,14 +48,14 @@ public class ClientResource {
 	}
 	
 	@PostMapping
-	public ResponseEntity<ClientDTO> saveClient(@RequestBody ClientDTO dto) {
+	public ResponseEntity<ClientDTO> saveClient(@Valid @RequestBody ClientDTO dto) {
 		dto = service.saveClient(dto);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(dto.getId()).toUri();
 		return ResponseEntity.created(uri).body(dto);
 	}
 	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<ClientDTO> updateCliente(@PathVariable long id , @RequestBody ClientDTO dto) {
+	public ResponseEntity<ClientDTO> updateCliente(@PathVariable long id ,@Valid @RequestBody ClientDTO dto) {
 		dto = service.updatecliente(id , dto);
 		return ResponseEntity.ok().body(dto);
 	}
