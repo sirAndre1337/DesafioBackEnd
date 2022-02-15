@@ -14,7 +14,9 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.br.CPF;
 
 import com.desafio.entities.Client;
+import com.desafio.services.validation.ClientValid;
 
+@ClientValid
 public class ClientDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 

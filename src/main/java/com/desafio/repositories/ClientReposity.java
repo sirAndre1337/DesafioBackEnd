@@ -8,4 +8,5 @@ import com.desafio.entities.Client;
 @Repository
 public interface ClientReposity extends JpaRepository<Client, Long>{
 
+	Client findByLogin(String login);
 }
