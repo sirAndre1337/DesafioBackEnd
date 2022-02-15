@@ -2,10 +2,15 @@ package com.desafio.services;
 
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,7 +24,7 @@ import com.desafio.repositories.RoleRepository;
 import com.desafio.services.exceptions.ResourceNotFoundException;
 
 @Service
-public class ClientService {
+public class ClientService implements UserDetailsService{
 
 	@Autowired
 	private ClientReposity reposity;
@@ -29,6 +34,8 @@ public class ClientService {
 	
 	@Autowired
 	private RoleRepository roleRepository;
+	
+	private static Logger logger = LoggerFactory.getLogger(ClientService.class);
 
 	@Transactional(readOnly = true)
 	public Page<ClientDTO> findAllPageable(PageRequest pageRequest) {
@@ -85,5 +92,16 @@ public class ClientService {
 			Role role = roleRepository.getOne(roleDto.getId());
 			entity.getRoles().add(role);
 		}
+	}
+
+	@Override
+	public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
+		Client client = reposity.findByLogin(login);
+		if (client == null) {
+			logger.error("Client not found: " + login);
+			throw new UsernameNotFoundException("Login not found");
+		}
+		logger.info("Client found: " + login);
+		return client;
 	}
 }
