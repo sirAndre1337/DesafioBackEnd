@@ -2,13 +2,18 @@ package com.desafio.entities;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -27,16 +32,28 @@ public class Client implements Serializable {
 	private Instant birthDate;
 	private Integer children;
 
+	@Column(unique = true)
+	private String login;
+	private String password;
+	
+	@ManyToMany
+	@JoinTable(name = "tb_client_role",
+	joinColumns = @JoinColumn(name = "client_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+	private Set<Role> roles = new HashSet<>();
+
 	public Client() {
 	}
 
-	public Client(long id, String name, String cpf, Double income, Instant birthDate, Integer children) {
+	public Client(long id, String name, String cpf, Double income, Instant birthDate, Integer children, String login,
+			String password) {
 		this.id = id;
 		this.name = name;
 		this.cpf = cpf;
 		this.income = income;
 		this.birthDate = birthDate;
 		this.children = children;
+		this.login = login;
+		this.password = password;
 	}
 
 	public long getId() {
@@ -85,6 +102,26 @@ public class Client implements Serializable {
 
 	public void setChildren(Integer children) {
 		this.children = children;
+	}
+
+	public String getLogin() {
+		return login;
+	}
+
+	public void setLogin(String login) {
+		this.login = login;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public Set<Role> getRoles() {
+		return roles;
 	}
 
 	@Override
