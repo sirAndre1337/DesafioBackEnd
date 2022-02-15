@@ -2,7 +2,9 @@ package com.desafio.dto;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import com.desafio.entities.Client;
 
@@ -15,17 +17,24 @@ public class ClientDTO implements Serializable {
 	private Double income;
 	private Instant birthDate;
 	private Integer children;
+	
+	private String login;
+	private String password;
+	
+	private Set<RoleDTO> roles = new HashSet<>();
 
 	public ClientDTO() {
 	}
 
-	public ClientDTO(Long id, String name, String cpf, Double income, Instant birthDate, Integer children) {
+	public ClientDTO(Long id, String name, String cpf, Double income, Instant birthDate, Integer children , String login , String password) {
 		this.id = id;
 		this.name = name;
 		this.cpf = cpf;
 		this.income = income;
 		this.birthDate = birthDate;
 		this.children = children;
+		this.login = login;
+		this.password = password;
 	}
 
 	public ClientDTO(Client entity) {
@@ -35,6 +44,8 @@ public class ClientDTO implements Serializable {
 		income = entity.getIncome();
 		birthDate = entity.getBirthDate();
 		children = entity.getChildren();
+		login = entity.getLogin();
+		entity.getRoles().forEach(role -> this.roles.add(new RoleDTO(role)));
 	}
 
 	public Long getId() {
@@ -83,6 +94,26 @@ public class ClientDTO implements Serializable {
 
 	public void setChildren(Integer children) {
 		this.children = children;
+	}
+	
+	public String getLogin() {
+		return login;
+	}
+
+	public void setLogin(String login) {
+		this.login = login;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public Set<RoleDTO> getRoles() {
+		return roles;
 	}
 
 	@Override

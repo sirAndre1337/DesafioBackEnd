@@ -6,12 +6,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.desafio.dto.ClientDTO;
+import com.desafio.dto.RoleDTO;
 import com.desafio.entities.Client;
+import com.desafio.entities.Role;
 import com.desafio.repositories.ClientReposity;
+import com.desafio.repositories.RoleRepository;
 import com.desafio.services.exceptions.ResourceNotFoundException;
 
 @Service
@@ -19,6 +23,12 @@ public class ClientService {
 
 	@Autowired
 	private ClientReposity reposity;
+	
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
+	
+	@Autowired
+	private RoleRepository roleRepository;
 
 	@Transactional(readOnly = true)
 	public Page<ClientDTO> findAllPageable(PageRequest pageRequest) {
@@ -36,6 +46,7 @@ public class ClientService {
 	@Transactional
 	public ClientDTO saveClient(ClientDTO dto) {
 		Client client = new Client();
+		client.setPassword(passwordEncoder.encode(dto.getPassword()));
 		copyDtoToEntity(dto, client);
 		client = reposity.save(client);
 		return new ClientDTO(client);
@@ -46,6 +57,7 @@ public class ClientService {
 		findById(id);
 		Client client = new Client();
 		client.setId(id);
+		client.setPassword(passwordEncoder.encode(dto.getPassword()));
 		copyDtoToEntity(dto, client);
 		client = reposity.save(client);
 		return new ClientDTO(client);
@@ -65,5 +77,13 @@ public class ClientService {
 		entity.setIncome(dto.getIncome());
 		entity.setBirthDate(dto.getBirthDate());
 		entity.setChildren(dto.getChildren());
+		entity.setLogin(dto.getLogin());
+//		entity.setPassword(dto.getPassword());
+		
+		entity.getRoles().clear();
+		for (RoleDTO roleDto: dto.getRoles()) {
+			Role role = roleRepository.getOne(roleDto.getId());
+			entity.getRoles().add(role);
+		}
 	}
 }
