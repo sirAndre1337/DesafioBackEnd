@@ -1,0 +1,10 @@
+INSERT INTO tb_client (name , cpf , income , birth_Date , children) VALUES ('André Luis' , '051-593-981.12' , '1000.0' , TIMESTAMP WITH TIME ZONE '1995-03-28T10:30:00Z' , '0');
+INSERT INTO tb_client (name , cpf , income , birth_Date , children) VALUES ('Roberto Vagner' , '223-233-111.13' , '3000.0' , TIMESTAMP WITH TIME ZONE '1968-06-14T10:30:00Z' , '3');
+INSERT INTO tb_client (name , cpf , income , birth_Date , children) VALUES ('Leonice Aparecida' , '666-566-222.33' , '7500.0' , TIMESTAMP WITH TIME ZONE '1971-05-23T10:30:00Z' , '3');
+INSERT INTO tb_client (name , cpf , income , birth_Date , children) VALUES ('Guilherme incubado' , '051-593-981.12' , '4000.0' , TIMESTAMP WITH TIME ZONE '1995-03-28T10:30:00Z' , '0');
+INSERT INTO tb_client (name , cpf , income , birth_Date , children) VALUES ('Camila' , '052-222-777.22' , '3000.0' , TIMESTAMP WITH TIME ZONE '1991-03-25T10:30:00Z' , '0');
+INSERT INTO tb_client (name , cpf , income , birth_Date , children) VALUES ('Igor gomes' , '233-222-111.12' , '8000.0' , TIMESTAMP WITH TIME ZONE '1995-06-12T10:30:00Z' , '0');
+INSERT INTO tb_client (name , cpf , income , birth_Date , children) VALUES ('Cassiano' , '222-111-333.12' , '2500.0' , TIMESTAMP WITH TIME ZONE '1994-07-01T10:30:00Z' , '0');
+INSERT INTO tb_client (name , cpf , income , birth_Date , children) VALUES ('Firezin' , '222-111-555.12' , '2500.0' , TIMESTAMP WITH TIME ZONE '1995-01-18T10:30:00Z' , '1');
+INSERT INTO tb_client (name , cpf , income , birth_Date , children) VALUES ('Sergio Antonio' , '111-111-111.12' , '0000.0' , TIMESTAMP WITH TIME ZONE '1997-03-28T10:30:00Z' , '0');
+INSERT INTO tb_client (name , cpf , income , birth_Date , children) VALUES ('Renner' , '999-888-777.12' , '5000.0' , TIMESTAMP WITH TIME ZONE '1994-03-28T10:30:00Z' , '0');
